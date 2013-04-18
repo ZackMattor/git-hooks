@@ -1,0 +1,18 @@
+#!/bin/sh
+
+txtrst=$(tput sgr0) # Text reset
+txtred=$(tput setaf 1) # Red
+
+exit_status=0
+staging_modified=0
+root=$(git rev-parse --show-toplevel)
+
+
+source $root/.git/hooks/scripts/pre-commit/sanitize-debugging.sh
+
+if [[ $exit_status -eq 1 ]] ; then
+  echo "${txtred}Commit failed, see above${txtrst}"
+fi
+
+exit $exit_status
+
